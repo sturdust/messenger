@@ -1,10 +1,15 @@
 package org.test.leverx.resources;
 
+import org.test.leverx.model.Message;
 import org.test.leverx.model.Profile;
 import org.test.leverx.service.ProfileService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -26,8 +31,10 @@ public class ProfileResource {
         return profileService.getProfile(profileName);
     }
     @POST
-    public Profile addProfile(Profile profile){
-        return profileService.addProfile(profile);
+    public Response addProfile(@Context UriInfo uriInfo, Profile profile){
+        Profile newProfile = profileService.addProfile(profile);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newProfile.getId())).build();
+        return Response.created(uri).status(Response.Status.CREATED).entity(newProfile).build();
     }
     @PUT
     @Path("/{profileName}")

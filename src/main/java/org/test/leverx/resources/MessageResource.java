@@ -4,7 +4,11 @@ import org.test.leverx.model.Message;
 import org.test.leverx.service.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -33,8 +37,10 @@ public class MessageResource {
         return messageService.getMessage(messageId);
     }
     @POST
-    public Message addMessage(Message message){
-        return messageService.addMessage(message);
+    public Response addMessage(@Context UriInfo uriInfo, Message message){
+        Message newMessage = messageService.addMessage(message);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newMessage.getId())).build();
+        return Response.created(uri).status(Response.Status.CREATED).entity(newMessage).build();
     }
     @PUT
     @Path("/{messageId}")
@@ -46,5 +52,10 @@ public class MessageResource {
     @Path("/{messageId}")
     public void deleteMessage(@PathParam("messageId") long messageId){
         messageService.removeMessaage(messageId);
+    }
+
+    @Path("/{messageId}/comments")
+    public CommentResource getCommentResource(){
+        return new CommentResource();
     }
 }
