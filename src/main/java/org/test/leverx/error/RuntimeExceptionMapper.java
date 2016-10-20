@@ -11,6 +11,6 @@ import javax.ws.rs.ext.Provider;
 public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>{
     @Override
     public Response toResponse(RuntimeException e) {
-        return Response.status(500).entity(new ErrorMessage(e.getMessage())).build();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorMessage(e.getMessage())).build();
     }
 }

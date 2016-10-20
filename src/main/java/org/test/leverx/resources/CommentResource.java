@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * Created by aliaksandr.vashyna on 10/20/2016.
  */
 //this class is subresource of message resource
+@Path("/")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
