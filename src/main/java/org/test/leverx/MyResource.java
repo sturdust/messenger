@@ -1,15 +1,17 @@
 package org.test.leverx;
 
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
-public class MyResource {
+@Path("/myresource")
+public class MyResource{
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent

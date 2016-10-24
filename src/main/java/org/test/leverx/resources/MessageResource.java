@@ -35,9 +35,11 @@ public class MessageResource {
     @Path("/{messageId}")
     public Message getMessage(@PathParam("messageId") long messageId, @Context UriInfo uriInfo){
         Message message = messageService.getMessage(messageId);
-        message.addLink(getUriForItself(uriInfo, message), "self");
-        message.addLink(getUriForProfile(uriInfo, message), "profile");
-        message.addLink(getUriForComments(uriInfo, message), "comments");
+        if(message.getLinks().isEmpty()) {
+            message.addLink(getUriForItself(uriInfo, message), "self");
+            message.addLink(getUriForProfile(uriInfo, message), "profile");
+            message.addLink(getUriForComments(uriInfo, message), "comments");
+        }
         return message;
 
     }
